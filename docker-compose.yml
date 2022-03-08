@@ -1,0 +1,132 @@
+version: '3.8'
+
+services:
+
+  zookeeper1:
+    hostname: zookeeper1
+    image: zookeeper:latest
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:2888:2889;2182 server.3=zookeeper3:3888:3889;2183
+    volumes:
+      - 'zookeeper_data:/data'
+      - 'zookeeper_log:/datalog'
+    ports:
+      - '2181:2181'
+    networks:
+      - lan
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==1
+
+  zookeeper2:
+    hostname: zookeeper2
+    image: zookeeper:latest
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:2888:2889;2182 server.3=zookeeper3:3888:3889;2183
+    volumes:
+      - 'zookeeper_data:/data'
+      - 'zookeeper_log:/datalog'
+    ports:
+      - '2182:2182'
+    networks:
+      - lan
+
+  zookeeper3:
+    hostname: zookeeper3
+    image: zookeeper:latest
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:2888:2889;2182 server.3=zookeeper3:3888:3889;2183
+    volumes:
+      - 'zookeeper_data:/data'
+      - 'zookeeper_log:/datalog'
+    ports:
+      - '2183:2183'
+    networks:
+      - lan
+
+  kafka1:
+    hostname: kafka1
+    image: macthegif/kafka:3.1.0
+    env_file:
+      - './security/keystores.pass'
+      - './kafka.env'
+    environment:
+      KAFKA_BROKER_ID: 101
+      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: SECURE://node1.mac.wales:9093
+    volumes:
+      - '/opt/kafka-security:/opt/kafka/security'
+      - 'kafka:/data'
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    networks:
+      - lan
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==1
+
+  kafka2:
+    hostname: kafka2
+    image: macthegif/kafka:3.1.0
+    env_file:
+      - './security/keystores.pass'
+      - './kafka.env'
+    environment:
+      KAFKA_BROKER_ID: 102
+      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: SECURE://node2.mac.wales:9093
+    volumes:
+      - '/opt/kafka-security:/opt/kafka/security'
+      - 'kafka:/data'
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    networks:
+      - lan
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==2
+
+  kafka3:
+    hostname: kafka3
+    image: macthegif/kafka:3.1.0
+    env_file:
+      - './security/keystores.pass'
+      - './kafka.env'
+    environment:
+      KAFKA_BROKER_ID: 103
+      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: SECURE://node3.mac.wales:9093
+    volumes:
+      - '/opt/kafka-security:/opt/kafka/security'
+      - 'kafka:/data'
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    networks:
+      - lan
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==3
+
+volumes:
+  zookeeper_data:
+  zookeeper_log:
+  kafka:
+
+networks:
+  lan: {}
