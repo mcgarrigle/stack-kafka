@@ -7,16 +7,14 @@ NODES="node1 node2 node3"
 echo $BASEDN
 
 cd security
-#rm -f rm -f *.key *.crt *.pass *.jks
+rm -f rm -f *.key *.crt *.pass *.jks
 
-#cert-make-ca.sh "CN=CA,$BASEDN"
-#cert-make-host.sh "$BASEDN" kafka $BROKERS
-#cert-make-user.sh "$BASEDN" admin
-#cert-make-user.sh "$BASEDN" u10083b58
+cert-make-ca.sh "CN=CA,$BASEDN"
+cert-make-host.sh "$BASEDN" kafka $BROKERS
+cert-make-user.sh "$BASEDN" admin 2e260eac98c4
+cert-make-user.sh "$BASEDN" u10083b58 1907f8ffe9bd
 
 for NODE in $NODES; do
-  echo $NODE
   ssh $NODE mkdir -p /opt/kafka-security
-  echo $NODE
   scp * $NODE:/opt/kafka-security
 done

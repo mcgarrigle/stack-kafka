@@ -2,7 +2,7 @@
 
 # Usage:
 #
-# cert-make-user.sh <base DN> [user CN]
+# cert-make-user.sh <base DN> [user CN] [keystore passphrase]
 #
 # Creates a keystore containing:
 # - Certificate for the user '<base DN>,<user CN>'
@@ -21,15 +21,21 @@ passphrase() {
   echo $RANDOM | md5sum | head -c $1
 }
 
+BN="$1"
+
 if [ -z "$2" ]; then
   RAND="$(passphrase 8)"
   CN="u${RAND,,}"
 else
-  # X="$2"
   CN="${2,,}"
 fi
 
-BN="$1"
+if [ -z "$3" ]; then
+  PASSPHRASE=$(passphrase 12)
+else
+  PASSPHRASE="$3"
+fi
+
 CONFIG="/tmp/${CN}.conf"
 CSR="/tmp/${CN}.csr"
 PASS="${CN}.pass"
@@ -39,8 +45,6 @@ P12="${CN}.p12"
 KEYSTORE="${CN}.jks"
 
 echo "Generating certificate for ${BN},CN=${CN}"
-
-PASSPHRASE=$(passphrase 12)
 
 echo "${PASSPHRASE}" > "${PASS}"
 
