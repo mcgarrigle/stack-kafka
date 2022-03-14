@@ -1,15 +1,6 @@
 # Kafka
 
-This project maintains the development image for Kafka
-
-The image contains:
-* Kafka     3.1.0
-
-## Docker Image Build
-```
-$ ./bin/assets.sh
-$ docker build --tag kafka:test .
-```
+This project maintains a development docker stack for Kafka
 
 ## Build PKI
 ```
@@ -52,24 +43,16 @@ $ cert-make-user.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB'
 
 ## Run Docker Compose
 ```
-$ docker-compose up -d
+$  bin/reset.sh
 ```
-Build kakacat (outside the scope of this README)
 
 ## Test
 ```
-$ kafka-topics.sh --bootstrap-server kafka:29093 --command-config tests/admin.properties --create --topic events
-$ kafka-topics.sh --bootstrap-server kafka:29093 --command-config tests/admin.properties --list
-
-$ kafka-acls.sh   --bootstrap-server kafka:29093 --command-config tests/admin.properties \
-  --add \
-  --topic events \
-  --producer \
-  --consumer --group event-group \
-  --allow-principal 'User:C=GB,L=CARDIFF,O=EXAMPLE,OU=KAFKA,CN=admin'
-
-$ echo fum |./root/kafkacat -P -b kafka:29093 -t events -X security.protocol=SSL -X ssl.ca.location=security/kafka.crt
-$ ./root/kafkacat -C -e -b kafka:29093 -t events -X security.protocol=SSL -X ssl.ca.location=security/kafka.crt
+$  tests/broker-make-certs.sh
+$  bin/reset.sh
+$  tests/broker-auth-configure.sh u10083b58
+$  tests/broker-auth.sh
 ```
 
 Hint:  If kafka fails on restart then wait until ephemeral znodes have timed out before restarting kafka.
+Hint2: Wait, just wait - it can take a couple of minutes to start.

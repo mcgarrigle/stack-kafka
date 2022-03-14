@@ -7,12 +7,12 @@ services:
     image: zookeeper:latest
     environment:
       ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:2888:2889;2182 server.3=zookeeper3:3888:3889;2183
+      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
     volumes:
       - 'zookeeper_data:/data'
       - 'zookeeper_log:/datalog'
-    ports:
-      - '2181:2181'
+        #ports:
+        #- '2181:2181'
     networks:
       - lan
     deploy:
@@ -25,28 +25,36 @@ services:
     image: zookeeper:latest
     environment:
       ZOO_MY_ID: 2
-      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:2888:2889;2182 server.3=zookeeper3:3888:3889;2183
+      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
     volumes:
       - 'zookeeper_data:/data'
       - 'zookeeper_log:/datalog'
-    ports:
-      - '2182:2182'
+        #ports:
+        #  - '2181:2181'
     networks:
       - lan
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==2
 
   zookeeper3:
     hostname: zookeeper3
     image: zookeeper:latest
     environment:
       ZOO_MY_ID: 3
-      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:2888:2889;2182 server.3=zookeeper3:3888:3889;2183
+      ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
     volumes:
       - 'zookeeper_data:/data'
       - 'zookeeper_log:/datalog'
-    ports:
-      - '2183:2183'
+        #ports:
+        #- '2181:2181'
     networks:
       - lan
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==3
 
   kafka1:
     hostname: kafka1
