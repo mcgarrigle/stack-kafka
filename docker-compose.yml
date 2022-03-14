@@ -9,8 +9,8 @@ services:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
     volumes:
-      - 'zookeeper_data:/data'
-      - 'zookeeper_log:/datalog'
+      - 'zookeeper1_data:/data'
+      - 'zookeeper1_log:/datalog'
         #ports:
         #- '2181:2181'
     networks:
@@ -27,8 +27,8 @@ services:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
     volumes:
-      - 'zookeeper_data:/data'
-      - 'zookeeper_log:/datalog'
+      - 'zookeeper2_data:/data'
+      - 'zookeeper2_log:/datalog'
         #ports:
         #  - '2181:2181'
     networks:
@@ -45,8 +45,8 @@ services:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
     volumes:
-      - 'zookeeper_data:/data'
-      - 'zookeeper_log:/datalog'
+      - 'zookeeper3_data:/data'
+      - 'zookeeper3_log:/datalog'
         #ports:
         #- '2181:2181'
     networks:
@@ -68,7 +68,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: SECURE://node1.mac.wales:9093
     volumes:
       - '/opt/kafka-security:/opt/kafka/security'
-      - 'kafka:/data'
+      - 'kafka1:/data'
     ports:
       - target: 9093
         published: 9093
@@ -93,7 +93,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: SECURE://node2.mac.wales:9093
     volumes:
       - '/opt/kafka-security:/opt/kafka/security'
-      - 'kafka:/data'
+      - 'kafka2:/data'
     ports:
       - target: 9093
         published: 9093
@@ -118,7 +118,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: SECURE://node3.mac.wales:9093
     volumes:
       - '/opt/kafka-security:/opt/kafka/security'
-      - 'kafka:/data'
+      - 'kafka3:/data'
     ports:
       - target: 9093
         published: 9093
@@ -132,9 +132,15 @@ services:
           - node.labels.cmb==3
 
 volumes:
-  zookeeper_data:
-  zookeeper_log:
-  kafka:
+  zookeeper1_data:
+  zookeeper2_log:
+  zookeeper3_data:
+  zookeeper1_log:
+  zookeeper2_data:
+  zookeeper3_log:
+  kafka1:
+  kafka2:
+  kafka3:
 
 networks:
   lan: {}
