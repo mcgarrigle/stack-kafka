@@ -8,3 +8,4 @@ security/*.p12
 security/*.srl
 security/*.pass
 root
+inventory.yaml
