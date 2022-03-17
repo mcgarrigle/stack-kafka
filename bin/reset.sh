@@ -12,14 +12,14 @@ function stack_delete_volumes {
 }
 
 function stack_start {
-  docker stack deploy -c docker-compose.yml cmb
+  docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-$1.yml" cmb
 }
 
 if [ "$1" == "stop" ]; then
   stack_remove
   stack_delete_volumes
-else
+elif [ "$1" == "hard" ]; then
   stack_remove
   stack_delete_volumes
-  stack_start
+  stack_start "${2:-prod}"
 fi

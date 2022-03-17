@@ -4,6 +4,7 @@ HERE=$(dirname $0)
 
 BROKER=node1.mac.wales:9093
 TOPIC="events"
+GROUP="${TOPIC}-group"
 
 # export KAFKA_OPTS="-Dlog4j.configuration=file:${HERE}/log4j.properties"
 
@@ -23,7 +24,7 @@ kafka-console-consumer.sh \
   --consumer.config "${HERE}/consumer.properties" \
   --bootstrap-server ${BROKER} \
   --topic ${TOPIC} \
-  --group "${TOPIC}-group" \
+  --group "${GROUP}" \
   --from-beginning \
   --timeout-ms 5000
 echo '#subscribe complete'

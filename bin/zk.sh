@@ -1,4 +1,5 @@
 #!/bin/sh
 
-docker exec -it kafka_zookeeper_1 zkCli.sh
+CONTAINER=$(docker ps --filter 'name=zookeeper1' --format '{{.Names}}')
+docker exec -it $CONTAINER zkCli.sh
 

@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+
+  zookeeper1:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==1
+
+  zookeeper2:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==2
+
+  zookeeper3:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==3
+
+  kafka1:
+    environment:
+      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: SECURE://node1.mac.wales:9093
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==1
+
+  kafka2:
+    environment:
+      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: SECURE://node2.mac.wales:9093
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==2
+
+  kafka3:
+    environment:
+      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: SECURE://node3.mac.wales:9093
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cmb==3
