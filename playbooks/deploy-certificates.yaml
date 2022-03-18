@@ -1,0 +1,26 @@
+---
+- name: deploy certificates
+  hosts: all
+  gather_facts: false
+  any_errors_fatal: true
+  become: true
+
+  tasks:
+
+  - name: make security directory
+    file:
+      path: '/opt/kafka/security'
+      state: directory
+
+  - name: copy trust certificates and keys
+    copy:
+      src: "{{ item }}"
+      dest: '/opt/kafka/security'
+    with_items:
+      - '/opt/kafka/ca/trust.jks'
+      - '/opt/kafka/ca/trust.pass'
+
+  - name: copy host certificates and keys
+    copy:
+      src: '/tmp/security/'
+      dest: '/opt/kafka/security'

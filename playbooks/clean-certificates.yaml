@@ -1,0 +1,13 @@
+---
+- name: deploy certificates
+  hosts: all
+  gather_facts: false
+  any_errors_fatal: true
+  become: true
+
+  tasks:
+
+  - name: make security directory
+    file:
+      path: '/opt/kafka/security'
+      state: absent

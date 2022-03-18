@@ -42,14 +42,14 @@ services:
     hostname: kafka1
     image: macthegif/kafka:3.1.0
     env_file:
-      - './security/keystores.pass'
+      - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
     environment:
       KAFKA_BROKER_ID: 101
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093
       KAFKA_ADVERTISED_LISTENERS: SECURE://node1.mac.wales:9093
     volumes:
-      - '/opt/kafka-security:/opt/kafka/security'
+      - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka1_data:/data'
     networks:
       - lan
@@ -58,14 +58,14 @@ services:
     hostname: kafka2
     image: macthegif/kafka:3.1.0
     env_file:
-      - './security/keystores.pass'
+      - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
     environment:
       KAFKA_BROKER_ID: 102
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093
       KAFKA_ADVERTISED_LISTENERS: SECURE://node2.mac.wales:9093
     volumes:
-      - '/opt/kafka-security:/opt/kafka/security'
+      - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka2_data:/data'
     networks:
       - lan
@@ -74,14 +74,14 @@ services:
     hostname: kafka3
     image: macthegif/kafka:3.1.0
     env_file:
-      - './security/keystores.pass'
+      - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
     environment:
       KAFKA_BROKER_ID: 103
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093
       KAFKA_ADVERTISED_LISTENERS: SECURE://node3.mac.wales:9093
     volumes:
-      - '/opt/kafka-security:/opt/kafka/security'
+      - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka3_data:/data'
     networks:
       - lan

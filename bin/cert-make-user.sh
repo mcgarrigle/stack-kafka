@@ -36,6 +36,10 @@ else
   PASSPHRASE="$3"
 fi
 
+CADIR="/opt/kafka/ca"
+CAKEY="${CADIR}/ca.key"
+CACRT="${CADIR}/ca.crt"
+
 CONFIG="/tmp/${CN}.conf"
 CSR="/tmp/${CN}.csr"
 PASS="${CN}.pass"
@@ -79,9 +83,9 @@ openssl x509 -req \
   -in "${CSR}" \
   -extfile "${CONFIG}" \
   -extensions "v3_req" \
-  -out "${CERT}" \
-  -CA "ca.crt" \
-  -CAkey "ca.key" \
+  -out   "${CERT}" \
+  -CA    "${CACRT}" \
+  -CAkey "${CAKEY}" \
   -CAcreateserial \
   -days 3650 \
   -sha256
@@ -93,9 +97,11 @@ openssl pkcs12 -export \
   -in  "${CERT}" \
   -inkey "${KEY}" \
   -chain \
-  -CAfile "ca.crt" \
+  -CAfile "${CACRT}" \
   -name "${CN}" \
   -out "${P12}"
+
+rm -f "${KEYSTORE}"
 
 keytool -importkeystore \
   -srcstoretype PKCS12 \
@@ -106,7 +112,7 @@ keytool -importkeystore \
   2> /dev/null
 
 keytool -import \
-  -file "ca.crt" \
+  -file "${CACRT}" \
   -alias ca1 \
   -keystore "${KEYSTORE}" \
   -storepass $PASSPHRASE \

@@ -43,15 +43,27 @@ $ cert-make-user.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB'
 
 ## Run Docker Compose
 ```
-$  bin/reset.sh
+$ bin/reset.sh
 ```
 
 ## Test
 ```
-$  tests/broker-make-certs.sh
-$  bin/reset.sh
-$  tests/broker-auth-configure.sh u10083b58
-$  tests/broker-auth.sh
+$ tests/broker-make-certs.sh
+$ bin/reset.sh
+$ tests/broker-auth-configure.sh u10083b58
+$ tests/broker-auth.sh
+```
+
+## Deploy
+```
+$ bin/cert-make-all.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB' kafka1 kafka2 kafka3 node1.mac.wales node2.mac.wales node3.mac.wales
+$ ansible-playbook playbooks/deploy-certificates.yaml
+$ docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-prod.yml" cmb
+
+$ cert-make-user.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB' u10083b58 1907f8ffe9bd
+$ tests/broker-auth-configure.sh u10083b58
+$ tests/broker-auth.sh
+
 ```
 
 Hint:  If kafka fails on restart then wait until ephemeral znodes have timed out before restarting kafka.

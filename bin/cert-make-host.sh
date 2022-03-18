@@ -21,6 +21,10 @@ SAN=$(echo $@ | xargs -n 1 | awk '{print "DNS." NR " =",$0}')
 CONFIG="/tmp/${CN}.conf"
 CSR="/tmp/${CN}.csr"
 
+CADIR="/opt/kafka/ca"
+CAKEY="${CADIR}/ca.key"
+CACRT="${CADIR}/ca.crt"
+
 PASS="${CN}.pass"
 CERT="${CN}.crt"
 KEY="${CN}.key"
@@ -75,8 +79,8 @@ openssl x509 -req \
   -extfile "${CONFIG}" \
   -extensions "v3_req" \
   -out "${CERT}" \
-  -CA "ca.crt" \
-  -CAkey "ca.key" \
+  -CA "${CACRT}" \
+  -CAkey "${CAKEY}" \
   -CAcreateserial \
   -days 3650 \
   -sha256
@@ -88,7 +92,7 @@ openssl pkcs12 -export \
   -in  "${CERT}" \
   -inkey "${KEY}" \
   -chain \
-  -CAfile "ca.crt" \
+  -CAfile "${CACRT}" \
   -name "${CN}" \
   -out "${P12}"
 
