@@ -1,5 +1,8 @@
 #!/bin/bash
 
+HERE=$(dirname $0)
+PATH=$PATH:$HERE
+
 BASEDN=$1
 shift
 BROKERS=$@

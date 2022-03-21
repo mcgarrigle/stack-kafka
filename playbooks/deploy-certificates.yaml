@@ -1,10 +1,32 @@
 ---
+- name: generate all certificates
+  hosts: node1
+  gather_facts: false
+  any_errors_fatal: true
+  become: true
+  tasks:
+
+  - name: make kafka directory
+    file:
+      path: '/opt/kafka'
+      state: directory
+
+  - name: link deployment utilities
+    file:
+      src: /root/stack-kafka/bin
+      dest: /opt/kafka/deploy
+      state: link
+
+  # bin/cert-make-all.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB' kafka1 kafka2 kafka3 node1.mac.wales node2.mac.wales node3.mac.wales
+  #
+  - name: generate all certificates
+    shell: "/opt/kafka/deploy/cert-make-all.sh {{ kafka_base_dn | quote }} kafka1 kafka2 kafka3 {{ kafka_brokers | join(' ') }}"
+
 - name: deploy certificates
   hosts: all
   gather_facts: false
   any_errors_fatal: true
   become: true
-
   tasks:
 
   - name: make security directory
