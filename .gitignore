@@ -8,5 +8,4 @@
 **/*.srl
 **/*.pass
 root
-inventory.yaml
 playbooks/security
