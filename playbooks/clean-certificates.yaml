@@ -7,7 +7,7 @@
 
   tasks:
 
-  - name: make security directory
+  - name: delete kafka directory
     file:
-      path: '/opt/kafka/security'
+      path: '/opt/kafka'
       state: absent

@@ -44,6 +44,7 @@ services:
     env_file:
       - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
+      - './kafka1.env'
     environment:
       KAFKA_BROKER_ID: 101
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093
@@ -60,6 +61,7 @@ services:
     env_file:
       - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
+      - './kafka2.env'
     environment:
       KAFKA_BROKER_ID: 102
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093
@@ -76,6 +78,7 @@ services:
     env_file:
       - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
+      - './kafka3.env'
     environment:
       KAFKA_BROKER_ID: 103
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093

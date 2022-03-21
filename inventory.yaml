@@ -11,15 +11,15 @@ all:
     kafka_base_dn: 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB'
 
   hosts:
-    node1:
-      ansible_host: 192.168.2.21
+    kafka1:
+      ansible_host: node1
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093
       KAFKA_ADVERTISED_LISTENERS: SECURE://node1.mac.wales:9093
-    node2:
-      ansible_host: 192.168.2.22
+    kafka2:
+      ansible_host: node2
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093
       KAFKA_ADVERTISED_LISTENERS: SECURE://node2.mac.wales:9093
-    node3:
-      ansible_host: 192.168.2.23
+    kafka3:
+      ansible_host: node3
       KAFKA_LISTENERS: SECURE://0.0.0.0:9093
       KAFKA_ADVERTISED_LISTENERS: SECURE://node3.mac.wales:9093

@@ -1,10 +1,16 @@
 ---
 - name: generate all certificates
-  hosts: node1
+  hosts: kafka1
   gather_facts: false
   any_errors_fatal: true
   become: true
   tasks:
+
+  - name: create kafka{n}.env environment file
+    copy:
+      dest: '/root/stack-kafka/{{ item }}.env'
+      content: "KAFKA_LISTENERS={{ hostvars[item]['KAFKA_LISTENERS'] }}\nKAFKA_ADVERTISED_LISTENERS={{ hostvars[item]['KAFKA_ADVERTISED_LISTENERS'] }}\n"
+    with_items: "{{ groups['all'] }}"
 
   - name: make kafka directory
     file:
@@ -17,8 +23,6 @@
       dest: /opt/kafka/deploy
       state: link
 
-  # bin/cert-make-all.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB' kafka1 kafka2 kafka3 node1.mac.wales node2.mac.wales node3.mac.wales
-  #
   - name: generate all certificates
     shell: "/opt/kafka/deploy/cert-make-all.sh {{ kafka_base_dn | quote }} kafka1 kafka2 kafka3 {{ kafka_brokers | join(' ') }}"
 
