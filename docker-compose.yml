@@ -47,8 +47,6 @@ services:
       - './kafka1.env'
     environment:
       KAFKA_BROKER_ID: 101
-      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: SECURE://node1.mac.wales:9093
     volumes:
       - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka1_data:/data'
@@ -64,8 +62,6 @@ services:
       - './kafka2.env'
     environment:
       KAFKA_BROKER_ID: 102
-      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: SECURE://node2.mac.wales:9093
     volumes:
       - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka2_data:/data'
@@ -81,8 +77,6 @@ services:
       - './kafka3.env'
     environment:
       KAFKA_BROKER_ID: 103
-      KAFKA_LISTENERS: SECURE://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: SECURE://node3.mac.wales:9093
     volumes:
       - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka3_data:/data'

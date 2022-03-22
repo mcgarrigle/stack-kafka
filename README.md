@@ -41,10 +41,11 @@ $ cert-make-user.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB'
   # u10083b58.pass
 ```
 
-## Run Docker Compose
+## In Development Environment Docker Compose
 ```
-$ bin/reset.sh
+$ bin/reset.sh [stop|hard] [environment]
 ```
+NEVER run this on production or test environments
 
 ## Test
 ```
@@ -56,9 +57,19 @@ $ tests/broker-auth.sh
 
 ## Deploy
 ```
+TEST
+
+$ bin/cert-make-all.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB' kafka1 kafka2 kafka3 node1.mac.wales node2.mac.wales node3.mac.wales
+$ ansible-playbook -i inventory-test.yaml playbooks/deploy-certificates.yaml
+$ docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-test.yml" cmb
+
+PROD
+
 $ bin/cert-make-all.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB' kafka1 kafka2 kafka3 node1.mac.wales node2.mac.wales node3.mac.wales
 $ ansible-playbook playbooks/deploy-certificates.yaml
 $ docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-prod.yml" cmb
+
+CHECK
 
 $ cert-make-user.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB' u10083b58 1907f8ffe9bd
 $ tests/broker-auth-configure.sh u10083b58
