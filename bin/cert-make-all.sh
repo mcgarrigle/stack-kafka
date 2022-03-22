@@ -7,6 +7,8 @@ BASEDN=$1
 shift
 BROKERS=$@
 
+PASS="2e260eac98c4"
+
 echo $BASEDN
 echo $BROKERS
 
@@ -23,4 +25,14 @@ cert-make-ca.sh "CN=CA,$BASEDN"
 make-directory "/tmp/security"
 
 cert-make-host.sh "$BASEDN" kafka $BROKERS
-cert-make-user.sh "$BASEDN" admin 2e260eac98c4
+
+# make admin user cert
+cert-make-user.sh "$BASEDN" admin $PASS
+
+cat << EOF > "/tmp/security/admin.properties"
+security.protocol = SSL
+ssl.truststore.location = /opt/kafka/security/admin.jks
+ssl.truststore.password = $PASS
+ssl.keystore.location = /opt/kafka/security/admin.jks
+ssl.keystore.password = $PASS
+EOF

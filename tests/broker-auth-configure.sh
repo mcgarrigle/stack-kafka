@@ -10,6 +10,7 @@ kafka-acls.sh   --bootstrap-server "${BROKER}" --command-config tests/admin.prop
   --add \
   --topic events \
   --producer \
-  --consumer --group ${TOPIC}-group \
+  --consumer \
+  --group ${TOPIC}-group \
   --allow-principal "User:$1"
 

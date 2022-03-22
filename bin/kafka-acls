@@ -1,0 +1,6 @@
+#!/bin/sh
+
+CONTAINER=$(docker ps --filter 'name=cmb_kafka1' --format '{{.Names}}')
+
+docker exec -it $CONTAINER /opt/kafka/bin/kafka-acls.sh $@
+
