@@ -1,7 +1,9 @@
 #!/bin/bash
 
-HERE=$(dirname $0)
+THIS=$(realpath $0)
+HERE=$(dirname $THIS)
 PATH=$PATH:$HERE
+echo $PATH
 
 BASEDN=$1
 shift
@@ -18,18 +20,16 @@ function make-directory {
   rm -f *.key *.crt *.pass *.jks
 }
 
-make-directory "/opt/kafka/ca"
+cd "./secrets"
 
 cert-make-ca.sh "CN=CA,$BASEDN"
 
-make-directory "/tmp/security"
-
-cert-make-host.sh "$BASEDN" kafka $BROKERS
+cert-make-host.sh "$BASEDN" $BROKERS
 
 # make admin user cert
 cert-make-user.sh "$BASEDN" admin $PASS
 
-cat << EOF > "/tmp/security/admin.properties"
+cat << EOF > "admin.properties"
 security.protocol = SSL
 ssl.truststore.location = /opt/kafka/security/admin.jks
 ssl.truststore.password = $PASS

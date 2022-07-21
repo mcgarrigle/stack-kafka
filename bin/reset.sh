@@ -7,13 +7,15 @@ function stack_remove {
 
 function stack_delete_volumes {
   for h in node1 node2 node3; do
-    ssh $h docker volume prune --force
+    ssh "${h}.mac.wales" docker volume prune --force
   done
 }
 
 function stack_start {
   docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-$1.yml" cmb
 }
+
+. cluster.env
 
 if [ "$1" == "stop" ]; then
   stack_remove

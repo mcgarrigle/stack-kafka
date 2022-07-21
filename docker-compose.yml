@@ -39,46 +39,62 @@ services:
       - lan
 
   kafka1:
-    hostname: kafka1
     image: macthegif/kafka:3.1.0
+    # hostname: kafka1
+    # command: ["/usr/bin/sleep", "infinity"]
     env_file:
-      - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
-      - './kafka1.env'
+      - './secrets/keystores.pass'
     environment:
       KAFKA_BROKER_ID: 101
+      KAFKA_ADVERTISED_LISTENERS: "SECURE://${BROKER1}:9093"
+
+    secrets:
+      - source: 'keystore'
+        target: '/run/secrets/kafka.jks'
+      - source: 'truststore'
+        target: '/run/secrets/trust.jks'
     volumes:
-      - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka1_data:/data'
     networks:
       - lan
 
   kafka2:
-    hostname: kafka2
     image: macthegif/kafka:3.1.0
+    # hostname: kafka2
+    # command: ["/usr/bin/sleep", "infinity"]
     env_file:
-      - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
-      - './kafka2.env'
+      - './secrets/keystores.pass'
     environment:
       KAFKA_BROKER_ID: 102
+      KAFKA_ADVERTISED_LISTENERS: "SECURE://${BROKER2}:9093"
+    secrets:
+      - source: 'keystore'
+        target: '/run/secrets/kafka.jks'
+      - source: 'truststore'
+        target: '/run/secrets/trust.jks'
     volumes:
-      - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka2_data:/data'
     networks:
       - lan
 
   kafka3:
-    hostname: kafka3
     image: macthegif/kafka:3.1.0
+    # hostname: kafka3
+    # command: ["/usr/bin/sleep", "infinity"]
     env_file:
-      - '/opt/kafka/security/keystores.pass'
       - './kafka.env'
-      - './kafka3.env'
+      - './secrets/keystores.pass'
     environment:
       KAFKA_BROKER_ID: 103
+      KAFKA_ADVERTISED_LISTENERS: "SECURE://${BROKER3}:9093"
+    secrets:
+      - source: 'keystore'
+        target: '/run/secrets/kafka.jks'
+      - source: 'truststore'
+        target: '/run/secrets/trust.jks'
     volumes:
-      - '/opt/kafka/security:/opt/kafka/security'
       - 'kafka3_data:/data'
     networks:
       - lan
@@ -93,6 +109,12 @@ volumes:
   kafka1_data:
   kafka2_data:
   kafka3_data:
+
+secrets:
+  keystore:
+    file: './secrets/kafka.jks'
+  truststore:
+    file: './secrets/trust.jks'
 
 networks:
   lan: {}

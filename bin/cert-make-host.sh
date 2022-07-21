@@ -21,9 +21,11 @@ SAN=$(echo $@ | xargs -n 1 | awk '{print "DNS." NR " =",$0}')
 CONFIG="/tmp/${CN}.conf"
 CSR="/tmp/${CN}.csr"
 
-CADIR="/opt/kafka/ca"
-CAKEY="${CADIR}/ca.key"
-CACRT="${CADIR}/ca.crt"
+# CADIR="/opt/kafka/ca"
+# CAKEY="${CADIR}/ca.key"
+# CACRT="${CADIR}/ca.crt"
+CAKEY="ca.key"
+CACRT="ca.crt"
 
 PASS="${CN}.pass"
 CERT="${CN}.crt"

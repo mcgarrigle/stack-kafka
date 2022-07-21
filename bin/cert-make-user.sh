@@ -36,9 +36,12 @@ else
   PASSPHRASE="$3"
 fi
 
-CADIR="/opt/kafka/ca"
-CAKEY="${CADIR}/ca.key"
-CACRT="${CADIR}/ca.crt"
+# CADIR="/opt/kafka/ca"
+# CAKEY="${CADIR}/ca.key"
+# CACRT="${CADIR}/ca.crt"
+
+CAKEY="ca.key"
+CACRT="ca.crt"
 
 CONFIG="/tmp/${CN}.conf"
 CSR="/tmp/${CN}.csr"
@@ -121,5 +124,5 @@ keytool -import \
 rm -f "${P12}"
 
 echo '------------------------------------'
-echo /// KEYSTORE
-keytool -list -keystore "${KEYSTORE}" -storepass $PASSPHRASE 2> /dev/null
+echo /// USER KEYSTORE for $CN
+keytool -v -list -keystore "${KEYSTORE}" -storepass $PASSPHRASE 2> /dev/null

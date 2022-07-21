@@ -58,4 +58,4 @@ keytool -import \
 
 echo '------------------------------------'
 echo /// TRUSTSTORE
-keytool -list -keystore "${TRUSTSTORE}" -storepass $PASSPHRASE 2> /dev/null
+keytool -v -list -keystore "${TRUSTSTORE}" -storepass $PASSPHRASE 2> /dev/null
