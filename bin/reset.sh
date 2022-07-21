@@ -12,7 +12,8 @@ function stack_delete_volumes {
 }
 
 function stack_start {
-  docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-$1.yml" cmb
+  # docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-$1.yml" cmb
+  docker stack deploy --compose-file "docker-compose.yml" cmb
 }
 
 . cluster.env

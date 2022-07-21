@@ -13,6 +13,10 @@ services:
       - 'zookeeper1_log:/datalog'
     networks:
       - lan
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.cmb == 1"
 
   zookeeper2:
     hostname: zookeeper2
@@ -25,6 +29,10 @@ services:
       - 'zookeeper2_log:/datalog'
     networks:
       - lan
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.cmb == 2"
 
   zookeeper3:
     hostname: zookeeper3
@@ -37,18 +45,19 @@ services:
       - 'zookeeper3_log:/datalog'
     networks:
       - lan
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.cmb == 3"
 
   kafka1:
     image: macthegif/kafka:3.1.0
-    # hostname: kafka1
-    # command: ["/usr/bin/sleep", "infinity"]
     env_file:
       - './kafka.env'
       - './secrets/keystores.pass'
     environment:
       KAFKA_BROKER_ID: 101
       KAFKA_ADVERTISED_LISTENERS: "SECURE://${BROKER1}:9093"
-
     secrets:
       - source: 'keystore'
         target: '/run/secrets/kafka.jks'
@@ -58,11 +67,13 @@ services:
       - 'kafka1_data:/data'
     networks:
       - lan
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.cmb == 1"
 
   kafka2:
     image: macthegif/kafka:3.1.0
-    # hostname: kafka2
-    # command: ["/usr/bin/sleep", "infinity"]
     env_file:
       - './kafka.env'
       - './secrets/keystores.pass'
@@ -78,11 +89,13 @@ services:
       - 'kafka2_data:/data'
     networks:
       - lan
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.cmb == 2"
 
   kafka3:
     image: macthegif/kafka:3.1.0
-    # hostname: kafka3
-    # command: ["/usr/bin/sleep", "infinity"]
     env_file:
       - './kafka.env'
       - './secrets/keystores.pass'
@@ -98,6 +111,10 @@ services:
       - 'kafka3_data:/data'
     networks:
       - lan
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.cmb == 3"
 
 volumes:
   zookeeper1_data:

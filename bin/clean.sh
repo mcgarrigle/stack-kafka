@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="./config"
+DIR="./secrets"
 
 for E in pass p12 crt key jks; do
   echo "${DIR}/*.${E}"

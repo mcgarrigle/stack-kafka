@@ -4,15 +4,8 @@ This project maintains a docker stack for Kafka
 
 ## Deploy
 ```
-TEST
-
-$ ansible-playbook -i inventory-test.yaml playbooks/deploy-certificates.yaml
-$ docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-test.yml" cmb
-
-PROD
-
-$ ansible-playbook -i inventory-prod.yaml playbooks/deploy-certificates.yaml
-$ docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-prod.yml" cmb
+$ . cluster.env
+$ bin/cert-make-all.sh "$BASE_DN" $BROKERS
 
 CHECK
 
