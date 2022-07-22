@@ -3,8 +3,8 @@ version: '3.8'
 services:
 
   zookeeper1:
+    image: "${ZOOKEEPER_IMAGE}"
     hostname: zookeeper1
-    image: zookeeper:latest
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
@@ -19,8 +19,8 @@ services:
           - "node.labels.${CLUSTER} == 1"
 
   zookeeper2:
+    image: "${ZOOKEEPER_IMAGE}"
     hostname: zookeeper2
-    image: zookeeper:latest
     environment:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
@@ -35,8 +35,8 @@ services:
           - "node.labels.${CLUSTER} == 2"
 
   zookeeper3:
+    image: "${ZOOKEEPER_IMAGE}"
     hostname: zookeeper3
-    image: zookeeper:latest
     environment:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zookeeper1:1888:1889;2181 server.2=zookeeper2:1888:1889;2181 server.3=zookeeper3:1888:1889;2181
@@ -51,7 +51,7 @@ services:
           - "node.labels.${CLUSTER} == 3"
 
   kafka1:
-    image: macthegif/kafka:3.1.0
+    image: "${KAFKA_IMAGE}"
     env_file:
       - './kafka.env'
       - './secrets/keystores.pass'
@@ -73,7 +73,7 @@ services:
           - "node.labels.${CLUSTER} == 1"
 
   kafka2:
-    image: macthegif/kafka:3.1.0
+    image: "${KAFKA_IMAGE}"
     env_file:
       - './kafka.env'
       - './secrets/keystores.pass'
@@ -95,7 +95,7 @@ services:
           - "node.labels.${CLUSTER} == 2"
 
   kafka3:
-    image: macthegif/kafka:3.1.0
+    image: "${KAFKA_IMAGE}"
     env_file:
       - './kafka.env'
       - './secrets/keystores.pass'
