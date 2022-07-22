@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function stack_remove {
-  docker stack rm cmb
+  docker stack rm $CLUSTER
   sleep 10
 }
 
@@ -12,8 +12,8 @@ function stack_delete_volumes {
 }
 
 function stack_start {
-  # docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-$1.yml" cmb
-  docker stack deploy --compose-file "docker-compose.yml" cmb
+  # docker stack deploy --compose-file "docker-compose.yml" --compose-file "docker-compose-$1.yml" $CLUSTER
+  docker stack deploy --compose-file "docker-compose.yml" $CLUSTER
 }
 
 . cluster.env

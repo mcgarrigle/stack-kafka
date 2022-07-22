@@ -4,12 +4,16 @@ This project maintains a docker stack for Kafka
 
 ## Deploy
 ```
+$ vi cluster.env   # set CLUSTER BASE_DN and BROKERS
 $ . cluster.env
 $ bin/cert-make-all.sh "$BASE_DN" $BROKERS
+$ bin/deploy.sh
+```
 
-CHECK
+## Check
 
-$ cert-make-user.sh 'OU=KAFKA,O=EXAMPLE,L=CARDIFF,C=GB' u10083b58 1907f8ffe9bd
+```
+$ cert-make-user.sh "$BASE_DN" u10083b58 1907f8ffe9bd
 $ tests/broker-auth-configure.sh u10083b58
 $ tests/broker-auth.sh
 

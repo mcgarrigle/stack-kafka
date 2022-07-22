@@ -16,7 +16,7 @@ services:
     deploy:
       placement:
         constraints:
-          - "node.labels.cmb == 1"
+          - "node.labels.${CLUSTER} == 1"
 
   zookeeper2:
     hostname: zookeeper2
@@ -32,7 +32,7 @@ services:
     deploy:
       placement:
         constraints:
-          - "node.labels.cmb == 2"
+          - "node.labels.${CLUSTER} == 2"
 
   zookeeper3:
     hostname: zookeeper3
@@ -48,7 +48,7 @@ services:
     deploy:
       placement:
         constraints:
-          - "node.labels.cmb == 3"
+          - "node.labels.${CLUSTER} == 3"
 
   kafka1:
     image: macthegif/kafka:3.1.0
@@ -70,7 +70,7 @@ services:
     deploy:
       placement:
         constraints:
-          - "node.labels.cmb == 1"
+          - "node.labels.${CLUSTER} == 1"
 
   kafka2:
     image: macthegif/kafka:3.1.0
@@ -92,7 +92,7 @@ services:
     deploy:
       placement:
         constraints:
-          - "node.labels.cmb == 2"
+          - "node.labels.${CLUSTER} == 2"
 
   kafka3:
     image: macthegif/kafka:3.1.0
@@ -114,7 +114,7 @@ services:
     deploy:
       placement:
         constraints:
-          - "node.labels.cmb == 3"
+          - "node.labels.${CLUSTER} == 3"
 
 volumes:
   zookeeper1_data:

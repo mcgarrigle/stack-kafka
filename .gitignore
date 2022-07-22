@@ -1,12 +1,3 @@
-*.tar.gz
-*.tgz
-*.gz
-**/*.crt
-**/*.jks
-**/*.key
-**/*.p12
-**/*.srl
-**/*.pass
-secrets/admin.properties
+secrets/*
+!secrets/.empty`
 root
-kafka[0-9].env
