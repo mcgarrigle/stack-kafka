@@ -1,6 +1,8 @@
 #!/bin/sh
 
-CONTAINER=$(docker ps --filter 'name=cmb_kafka1' --format '{{.Names}}')
+#CONTAINER=$(docker ps --filter "name=${CLUSTER}_kafka1" --format '{{.Names}}')
 
-docker exec -it $CONTAINER /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka1:9093 --command-config /opt/kafka/security/admin.properties /opt/kafka/bin/kafka-topics.sh $@
+#docker exec -it $CONTAINER /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka1:9093 --command-config /opt/kafka/security/admin.properties /opt/kafka/bin/kafka-topics.sh $@
+
+docker run -it -v $PWD/secrets:/opt/kafka/secrets $KAFKA_IMAGE /opt/kafka/bin/kafka-topics.sh --bootstrap-server "${BROKER1}:9093" --command-config /opt/kafka/secrets/admin.properties /opt/kafka/bin/kafka-topics.sh $@
 

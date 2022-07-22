@@ -67,6 +67,12 @@ services:
       - 'kafka1_data:/data'
     networks:
       - lan
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    deploy:
     deploy:
       placement:
         constraints:
@@ -89,6 +95,11 @@ services:
       - 'kafka2_data:/data'
     networks:
       - lan
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
     deploy:
       placement:
         constraints:
@@ -111,6 +122,11 @@ services:
       - 'kafka3_data:/data'
     networks:
       - lan
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
     deploy:
       placement:
         constraints:
