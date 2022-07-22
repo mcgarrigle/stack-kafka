@@ -1,12 +1,15 @@
 #!/bin/sh
 
-BROKER="node1.mac.wales:9093"
 TOPIC=events
 
-kafka-topics.sh --bootstrap-server "${BROKER}" --command-config tests/admin.properties --create --topic ${TOPIC}
-kafka-topics.sh --bootstrap-server "${BROKER}" --command-config tests/admin.properties --list
+PATH=$PATH:/opt/kafka/bin
 
-kafka-acls.sh   --bootstrap-server "${BROKER}" --command-config tests/admin.properties \
+CONFIG="--bootstrap-server "${BROKER}:9093" --command-config tests/admin.properties"
+
+kafka-topics.sh ${CONFIG} --create --topic ${TOPIC}
+kafka-topics.sh ${CONFIG} --list
+
+kafka-acls.sh $CONFIG  \
   --add \
   --topic events \
   --producer \
