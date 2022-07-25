@@ -1,3 +1,3 @@
 #!/usr/bin/bash
 
-docker stack deploy --compose-file "docker-compose.yml" "$CLUSTER"
+docker stack deploy --compose-file "zookeeper.stack.yml" --compose-file "kafka.stack.yml" "$CLUSTER"
