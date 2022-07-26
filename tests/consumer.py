@@ -12,9 +12,9 @@ consumer = KafkaConsumer(
     client_id="test",
     group_id="events-group",
     security_protocol="SSL",
-    ssl_cafile="security/ca.crt",
-    ssl_certfile="security/u10083b58.crt",
-    ssl_keyfile="security/u10083b58.key"
+    ssl_cafile="/opt/kafka/security/ca.crt",
+    ssl_certfile="/opt/kafka/security/u10083b58.crt",
+    ssl_keyfile="/opt/kafka/security/u10083b58.key"
 )
 
 # Call poll twice. First call will just assign partitions for our

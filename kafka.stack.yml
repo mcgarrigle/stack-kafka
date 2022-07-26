@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+
+  kafka1:
+    image: "${KAFKA_IMAGE}"
+    env_file:
+      - './kafka.env'
+      - './secrets/keystores.pass'
+    environment:
+      KAFKA_BROKER_ID: 101
+      KAFKA_ADVERTISED_LISTENERS: "SECURE://${BROKER1}:9093"
+    secrets:
+      - source: 'keystore'
+        target: '/run/secrets/kafka.jks'
+      - source: 'truststore'
+        target: '/run/secrets/trust.jks'
+    volumes:
+      - 'kafka1_data:/data'
+    networks:
+      - lan
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    deploy:
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.${CLUSTER} == 1"
+
+  kafka2:
+    image: "${KAFKA_IMAGE}"
+    env_file:
+      - './kafka.env'
+      - './secrets/keystores.pass'
+    environment:
+      KAFKA_BROKER_ID: 102
+      KAFKA_ADVERTISED_LISTENERS: "SECURE://${BROKER2}:9093"
+    secrets:
+      - source: 'keystore'
+        target: '/run/secrets/kafka.jks'
+      - source: 'truststore'
+        target: '/run/secrets/trust.jks'
+    volumes:
+      - 'kafka2_data:/data'
+    networks:
+      - lan
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.${CLUSTER} == 2"
+
+  kafka3:
+    image: "${KAFKA_IMAGE}"
+    env_file:
+      - './kafka.env'
+      - './secrets/keystores.pass'
+    environment:
+      KAFKA_BROKER_ID: 103
+      KAFKA_ADVERTISED_LISTENERS: "SECURE://${BROKER3}:9093"
+    secrets:
+      - source: 'keystore'
+        target: '/run/secrets/kafka.jks'
+      - source: 'truststore'
+        target: '/run/secrets/trust.jks'
+    volumes:
+      - 'kafka3_data:/data'
+    networks:
+      - lan
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.${CLUSTER} == 3"
+
+volumes:
+  kafka1_data:
+  kafka2_data:
+  kafka3_data:
+
+secrets:
+  keystore:
+    file: './secrets/kafka.jks'
+  truststore:
+    file: './secrets/trust.jks'
+
+networks:
+  lan: {}

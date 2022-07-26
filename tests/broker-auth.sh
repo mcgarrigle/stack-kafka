@@ -1,8 +1,10 @@
 #!/usr/bin/bash
 
-HERE=$(dirname $0)
+THIS=$(realpath $0)
+HERE=$(dirname $THIS)
 
-BROKER=node1.mac.wales:9093
+PATH=$PATH:/opt/kafka/bin
+
 TOPIC="events"
 GROUP="${TOPIC}-group"
 
@@ -17,6 +19,8 @@ echo "//// AUTH message $(date) //" | kafka-console-producer.sh \
   --bootstrap-server ${BROKER} \
   --topic ${TOPIC} 
 echo '#publish complete'
+
+exit
 
 echo
 echo '#subscribe'

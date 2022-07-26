@@ -1,11 +1,3 @@
-*.tar.gz
-*.tgz
-*.gz
-security/*.crt
-security/*.jks
-security/*.key
-security/*.p12
-security/*.srl
-security/*.pass
+secrets/*
+!secrets/.empty`
 root
-inventory.yaml
