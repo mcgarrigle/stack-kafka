@@ -30,6 +30,10 @@ clean() {
   echo "// clean"
   docker stack rm "${CLUSTER}"
   rm -vf "${ROOT}/secrets/"*
+
+  for h in $BROKERS; do
+    ssh "${h}" docker volume prune --force
+  done
 }
 
 # ---------------------------

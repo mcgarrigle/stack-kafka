@@ -6,8 +6,8 @@ function stack_remove {
 }
 
 function stack_delete_volumes {
-  for h in node1 node2 node3; do
-    ssh "${h}.mac.wales" docker volume prune --force
+  for h in $BROKERS; do
+    ssh "${h}" docker volume prune --force
   done
 }
 

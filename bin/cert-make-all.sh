@@ -24,7 +24,7 @@ cd "./secrets"
 
 cert-make-ca.sh "CN=CA,$BASEDN"
 
-cert-make-host.sh "$BASEDN" $BROKERS
+cert-make-host.sh "$BASEDN" kafka $BROKERS
 
 # make admin user cert
 cert-make-user.sh "$BASEDN" admin $PASS
