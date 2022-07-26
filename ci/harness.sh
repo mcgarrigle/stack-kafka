@@ -4,17 +4,20 @@ THIS=$(realpath $0)
 HERE=$(dirname $THIS)
 ROOT=$(realpath "$HERE/..")
 
-echo "// environment --------------------------------------------"
-echo "   THIS    = '${THIS}'"
-echo "   HERE    = '${HERE}'"
-echo "   ROOT    = '${ROOT}'"
-echo "   BASE_DN = '${BASE_DN}'"
-echo "   BROKER  = '${BROKER}'"
-echo "// --------------------------------------------------------"
-echo
-
 source "$HERE/cluster.env"
 export BROKER="${BROKER1}:9093"
+
+echo "// $1"
+echo "// environment --------------------------------------------"
+echo "   THIS      = '${THIS}'"
+echo "   HERE      = '${HERE}'"
+echo "   ROOT      = '${ROOT}'"
+echo "   BASE_DN   = '${BASE_DN}'"
+echo "   BROKER    = '${BROKER}'"
+echo "   ZOOKEEPER = '${ZOOKEEPER_IMAGE}'"
+echo "   KAFKA     = '${KAFKA_IMAGE}'"
+echo "// --------------------------------------------------------"
+echo
 
 PATH=$PATH:"$ROOT/bin"
 
