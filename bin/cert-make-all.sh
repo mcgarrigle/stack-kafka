@@ -31,8 +31,8 @@ cert-make-user.sh "$BASEDN" admin $PASS
 
 cat << EOF > "admin.properties"
 security.protocol = SSL
-ssl.truststore.location = /opt/kafka/security/admin.jks
+ssl.truststore.location = /opt/kafka/secrets/admin.jks
 ssl.truststore.password = $PASS
-ssl.keystore.location = /opt/kafka/security/admin.jks
+ssl.keystore.location = /opt/kafka/secrets/admin.jks
 ssl.keystore.password = $PASS
 EOF

@@ -5,8 +5,6 @@ HERE=$(dirname $THIS)
 
 PATH=$PATH:/opt/kafka/bin
 
-BROKER="${BROKER}:9093"
-
 TOPIC="events"
 GROUP="${TOPIC}-group"
 
